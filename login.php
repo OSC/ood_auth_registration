@@ -62,24 +62,9 @@ function scrub_password($password){
 }
 
 function display_login_form($error = null){
-  /* if($error){ */
-  /*   $cmd = $error ? "LOGIN_ERROR=\"$error\" " : ""; */
-  /*   $cmd .= "SCRIPT_NAME={$_SERVER['SCRIPT_NAME']} HTTP_METHOD=POST USERNAME_FIELD=username PASSWORD_FIELD=password erb templates/login.html.erb"; */
-
-  /*   echo "Error occurred: $error"; */
-  /*   echo "<pre>$cmd</pre>"; */
-  /* } */
-  /* else { */
-  // FIXME: what is MAO_REF? is that used anywhere?
-  $cmd = $error ? "LOGIN_ERROR=\"$error\" " : "";
-
-  // TODO:
-  // $redir = isset($_GET['redir']) ? $_GET['redir'] : "/";
-  // $cmd .=  "REDIR='" . escapeshellarg($redir) . "' ";
-
-  $cmd .= "SCRIPT_NAME={$_SERVER['SCRIPT_NAME']} HTTP_METHOD=POST USERNAME_FIELD=username PASSWORD_FIELD=password erb templates/login.html.erb";
-  $output = `$cmd`;
-  echo $output;
+  $redir = "/test";
+  $form_action = $_SERVER['SCRIPT_NAME'];
+  include "form.php";
 }
 
 function add_my_dn($user, $dn, &$error)

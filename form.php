@@ -25,9 +25,10 @@
 
 <!-- content -->
 <div class="container">
-  <% if ENV['LOGIN_ERROR'] %>
-  <div class="alert alert-danger" role="alert"><strong>Login failed:</strong> <%= ENV['LOGIN_ERROR'] %></div>
-  <% end %>
+
+  <?php if ($error != null): ?>
+  <div class="alert alert-danger" role="alert"><strong>Registration failed:</strong> <?= $error ?></div>
+  <?php endif; ?>
 
   <h3>Login to register this Open Id Provider with your OSC account</h3>
   <p>This is the first time you have tried logging into OnDemand with this external
@@ -37,7 +38,7 @@
   <div class="row">
     <div class="col-md-6">
 
-   <form class="form-horizontal" action="<%= ENV['SCRIPT_NAME'] %>" method="<%= ENV['HTTP_METHOD'] %>">
+   <form class="form-horizontal" action="<?= $form_action ?>" method="post">
      <!-- for IE8 we need to add <fieldset> tags to make styling the legend tag possible
      https://github.com/ssolomon/bootstrap/commit/650ae3b454ecbafb050a3bc7397cf2b03bdb34cd
       -->
@@ -45,20 +46,20 @@
        <legend>OSC Login</legend>
 
        <div class="form-group">
-         <label class="col-sm-2 control-label" for="<%= ENV['USERNAME_FIELD'] %>">Username:</label>
+         <label class="col-sm-2 control-label" for="username">Username:</label>
          <div class="col-sm-7">
-           <input class="form-control" type="text" id="<%= ENV['USERNAME_FIELD'] %>" name="<%= ENV['USERNAME_FIELD'] %>" placeholder="Username">
+           <input class="form-control" type="text" id="username" name="username" placeholder="Username">
          </div>
        </div>
 
        <div class="form-group">
-         <label class="col-sm-2 control-label" for="<%= ENV['PASSWORD_FIELD'] %>">Password:</label>
+         <label class="col-sm-2 control-label" for="password">Password:</label>
          <div class="col-sm-7">
-           <input class="form-control" type="password" id="<%= ENV['PASSWORD_FIELD'] %>" name="<%= ENV['PASSWORD_FIELD'] %>" placeholder="Password">
+           <input class="form-control" type="password" id="password" name="password" placeholder="Password">
          </div>
        </div>
 
-       <input type="hidden" name="redir" value="<%= ENV['REDIR'] %>">
+       <input type="hidden" name="redir" value="<?= $redir ?>">
 
        <div class="form-group">
          <div class="col-sm-offset-2 col-sm-6">
