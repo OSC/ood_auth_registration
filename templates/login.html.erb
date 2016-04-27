@@ -41,23 +41,32 @@ There is only one location for the login page -- no separate dev version at this
   <% if ENV['LOGIN_ERROR'] %>
   <div class="alert alert-danger" role="alert"><strong>Login failed:</strong> <%= ENV['LOGIN_ERROR'] %></div>
   <% end %>
+
+  <h3>Login to register this Open Id Provider with your OSC account</h3>
+  <p>This is the first time you have tried logging into OnDemand with this external
+  identity provider. By providing your OSC account credentials we will associate
+  the two accounts so that in the future you may login just with this identity provider.</p>
+
+  <div class="row">
+    <div class="col-md-6">
+
    <form class="form-horizontal" action="<%= ENV['SCRIPT_NAME'] %>" method="<%= ENV['HTTP_METHOD'] %>">
      <!-- for IE8 we need to add <fieldset> tags to make styling the legend tag possible
      https://github.com/ssolomon/bootstrap/commit/650ae3b454ecbafb050a3bc7397cf2b03bdb34cd
       -->
      <!--[if lt IE 9]><fieldset><![endif]-->
-       <legend>Login with OSC credentails to associate OSC account with chosen authentication provider</legend>
+       <legend>OSC Login</legend>
 
        <div class="form-group">
          <label class="col-sm-2 control-label" for="<%= ENV['USERNAME_FIELD'] %>">Username:</label>
-         <div class="col-sm-3">
+         <div class="col-sm-7">
            <input class="form-control" type="text" id="<%= ENV['USERNAME_FIELD'] %>" name="<%= ENV['USERNAME_FIELD'] %>" placeholder="Username">
          </div>
        </div>
 
        <div class="form-group">
          <label class="col-sm-2 control-label" for="<%= ENV['PASSWORD_FIELD'] %>">Password:</label>
-         <div class="col-sm-3">
+         <div class="col-sm-7">
            <input class="form-control" type="password" id="<%= ENV['PASSWORD_FIELD'] %>" name="<%= ENV['PASSWORD_FIELD'] %>" placeholder="Password">
          </div>
        </div>
@@ -71,6 +80,15 @@ There is only one location for the login page -- no separate dev version at this
        </div>
      <!--[if lt IE 9]></fieldset><![endif]-->
    </form>
+
+    </div>
+    <div class="col-md-6">
+      <!-- FIXME: address Firefox fieldets issue -->
+      <fieldset>
+        <legend>Open ID Connect Provider</legend>
+      </fieldset>
+    </div>
+  </div>
 </div>
 
 <div class="footer">
