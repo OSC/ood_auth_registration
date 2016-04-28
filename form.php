@@ -43,7 +43,7 @@ body {
   <div class="alert alert-danger" role="alert"><strong>Registration failed:</strong> <?= $error ?></div>
   <?php endif; ?>
 
-  <h3>Login to register this Open Id Provider with your OSC account</h3>
+  <h3>Login to register this Open Connect Id Provider with your OSC account</h3>
   <p>This is the first time you have tried logging into OnDemand with this external
   identity provider. By providing your OSC account credentials we will associate
   the two accounts so that in the future you may login just with this identity provider.</p>
@@ -88,10 +88,10 @@ body {
       <fieldset>
         <legend>Open ID Connect Provider</legend>
           <dl class="dl-horizontal">
-              <dt>Name</dt><dd>Ohio Sate University</dd>
-              <dt>Login ID</dt><dd>franz.69@osu.edu</dd>
-              <dt>Login User</dt><dd>Robert Franz</dd>
-              <dt>Login Email</dt><dd>franz.69@osu.edu</dd>
+            <dt>Name</dt><dd><?= $_SERVER['OIDC_CLAIM_idp_name'] ?></dd>
+            <dt>Login ID</dt><dd><?= $_SERVER['OIDC_CLAIM_eppn'] ?></dd>
+            <dt>Login User</dt><dd><?= $_SERVER['OIDC_CLAIM_name'] ?></dd>
+            <dt>Login Email</dt><dd><?= $_SERVER['OIDC_CLAIM_email'] ?></dd>
           </dl>
       </fieldset>
     </div>
