@@ -61,10 +61,20 @@ function scrub_password($password){
     return $password;
 }
 
+function get_redir(){
+  //TODO: _GET['redir']
+  return "/";
+}
+
 function display_login_form($error = null){
-  $redir = "/test";
+  $redir = get_redir();
   $form_action = $_SERVER['SCRIPT_NAME'];
   include "form.php";
+}
+
+function display_success_page(){
+  $redir = get_redir();
+  include "success.php";
 }
 
 function add_my_dn($user, $dn, &$error)
@@ -74,7 +84,9 @@ function add_my_dn($user, $dn, &$error)
   $user = escapeshellarg($user);
   $dn = escapeshellarg($dn);
 
-  $cmd = "/nfs/17/efranz/dev/ood_auth_map/add-user-dn --user {$user} --dn {$dn} 2>&1";
+  // FIXME: uncomment once this script is executable by apache user
+  // $cmd = "/usr/local/bin/add-user-dn --user {$user} --dn {$dn} 2>&1";
+  $cmd = "./add-user-dn --user {$user} --dn {$dn} 2>&1";
   exec($cmd, $output, $return_var);
 
   $error = implode("\n", $output);
@@ -95,12 +107,11 @@ if(isset($_POST['username'])){
     // $error = test_ldap("efranz", "xx");
     if ($error == "ok") {
       $add_my_dn_error = null;
-      if(! add_my_dn($_POST['username'], $_SERVER['PHP_AUTH_USER'], $add_my_dn_error)){
-        echo "<h1>Mapping failed!</h1>";
-        echo "<pre>" . $add_my_dn_error . "</pre>";
+      if(add_my_dn($_POST['username'], $_SERVER['PHP_AUTH_USER'], $add_my_dn_error)){
+        display_success_page();
       }
       else {
-        echo "<h1>Mapping successfully created! Redirecting to final destination in 5 seconds...</h1>";
+        display_login_form("Mapping failed: " . $add_my_dn_error);
       }
     }
     else {
