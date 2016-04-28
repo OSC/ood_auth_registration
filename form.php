@@ -87,6 +87,12 @@ body {
       <!-- FIXME: address Firefox fieldets issue -->
       <fieldset>
         <legend>Open ID Connect Provider</legend>
+          <dl class="dl-horizontal">
+              <dt>Name</dt><dd>Ohio Sate University</dd>
+              <dt>Login ID</dt><dd>franz.69@osu.edu</dd>
+              <dt>Login User</dt><dd>Robert Franz</dd>
+              <dt>Login Email</dt><dd>franz.69@osu.edu</dd>
+          </dl>
       </fieldset>
     </div>
   </div>
