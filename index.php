@@ -84,9 +84,10 @@ function add_my_dn($user, $dn, &$error)
   $user = escapeshellarg($user);
   $dn = escapeshellarg($dn);
 
-  // FIXME: uncomment once this script is executable by apache user
-  // $cmd = "/usr/local/bin/add-user-dn --user {$user} --dn {$dn} 2>&1";
-  $cmd = "./add-user-dn --user {$user} --dn {$dn} 2>&1";
+  $cmd = "/usr/local/bin/add-user-dn --user {$user} --dn {$dn} 2>&1";
+  // If the /usr/local/bin/add-user-dn script can't be run by apache, you can copy
+  // it locally and run it with this.
+  // $cmd = "./add-user-dn --user {$user} --dn {$dn} 2>&1";
   exec($cmd, $output, $return_var);
 
   $error = implode("\n", $output);
