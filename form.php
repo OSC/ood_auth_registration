@@ -23,6 +23,8 @@ body {
   padding-top: 60px;
 }
 </style>
+</head>
+
 <body>
 
 <!-- navigation bar -->
