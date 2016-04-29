@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="refresh" content="5;url=/">
 
+  <link href="/public/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
   <link rel="stylesheet" href="css/bootstrap.min.css">
 
 <style type="text/css">
