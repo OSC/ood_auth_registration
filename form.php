@@ -54,7 +54,7 @@ body {
   <div class="row">
     <div class="col-md-6">
 
-   <form class="form-horizontal" action="<?= $form_action ?>" method="post">
+   <form class="form-horizontal" action="<?= htmlspecialchars($form_action) ?>" method="post">
      <!-- for IE8 we need to add <fieldset> tags to make styling the legend tag possible
      https://github.com/ssolomon/bootstrap/commit/650ae3b454ecbafb050a3bc7397cf2b03bdb34cd
       -->
@@ -74,8 +74,6 @@ body {
            <input class="form-control" type="password" id="password" name="password" placeholder="Password">
          </div>
        </div>
-
-       <input type="hidden" name="redir" value="<?= $redir ?>">
 
        <div class="form-group">
          <div class="col-sm-offset-2 col-sm-6">
