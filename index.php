@@ -61,9 +61,26 @@ function scrub_password($password){
     return $password;
 }
 
+// get redirect url, verify it is relative to host
 function get_redir(){
-  //TODO: _GET['redir']
-  return "/";
+  $redir = "/";
+
+  if(isset($_GET['redir'])){
+     $redir = $_GET['redir'];
+  }
+  else if(isset($_POST['redir'])){
+     $redir = $_POST['redir'];
+  }
+
+  // validate
+  if($redir && strlen($redir) > 0 && substr($redir, 0, 1) == "/"){
+    // do nothing, this is good
+  }
+  else{
+    $redir = "/";
+  }
+
+  return $redir;
 }
 
 function display_login_form($error = null){

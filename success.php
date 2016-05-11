@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="5;url=/">
+  <meta http-equiv="refresh" content="5;url=<?= htmlspecialchars($redir) ?>">
 
   <link href="/public/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
   <link rel="stylesheet" href="css/bootstrap.min.css">

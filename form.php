@@ -75,7 +75,7 @@ body {
          </div>
        </div>
 
-       <input type="hidden" name="redir" value="<?= $redir ?>">
+       <input type="hidden" name="redir" value="<?= htmlspecialchars($redir) ?>">
 
        <div class="form-group">
          <div class="col-sm-offset-2 col-sm-6">
