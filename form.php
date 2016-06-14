@@ -89,10 +89,9 @@ body {
       <fieldset>
         <legend>Open ID Connect Provider</legend>
           <dl class="dl-horizontal">
-            <dt>Name</dt><dd><?= $_SERVER['OIDC_CLAIM_idp_name'] ?></dd>
-            <dt>Login ID</dt><dd><?= $_SERVER['OIDC_CLAIM_eppn'] ?></dd>
-            <dt>Login User</dt><dd><?= $_SERVER['OIDC_CLAIM_name'] ?></dd>
-            <dt>Login Email</dt><dd><?= $_SERVER['OIDC_CLAIM_email'] ?></dd>
+            <?php foreach($provider_claims as $key => $value){ ?>
+              <dt><?= $key ?></dt><dd><?= $value ?></dd>
+            <?php } ?>
           </dl>
       </fieldset>
     </div>
