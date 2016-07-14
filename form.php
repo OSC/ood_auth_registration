@@ -2,9 +2,7 @@
 <!--[if lt IE 9]><html class="lt-ie9" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
 
-<?php
-include('config.php');
-?>
+<?php include('config.php'); ?>
 
 <head>
   <title><?= $config->title ?> | Register OpenID Provider</title>
