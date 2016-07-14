@@ -46,9 +46,9 @@ body {
   <div class="alert alert-danger" role="alert"><strong>Registration failed:</strong> <?= $error ?></div>
   <?php endif; ?>
 
-  <h3>Login to register this Open Connect Id Provider with your OSC account</h3>
+  <h3>Login to register this Open Connect Id Provider with your HPC account</h3>
   <p>This is the first time you have tried logging into OnDemand with this external
-  identity provider. By providing your OSC account credentials we will associate
+  identity provider. By providing your HPC account credentials we will associate
   the two accounts so that in the future you may login just with this identity provider.</p>
 
   <div class="row">
@@ -59,7 +59,7 @@ body {
      https://github.com/ssolomon/bootstrap/commit/650ae3b454ecbafb050a3bc7397cf2b03bdb34cd
       -->
      <!--[if lt IE 9]><fieldset><![endif]-->
-       <legend>OSC Login</legend>
+       <legend>HPC Login</legend>
 
        <div class="form-group">
          <label class="col-sm-2 control-label" for="username">Username:</label>
