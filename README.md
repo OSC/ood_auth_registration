@@ -9,6 +9,18 @@ Summary:
 3. if successful binding, map the HPC username to the DN using add-user-dn script that apache is given privilege to run on behalf of the user
 4. show them success.php, which then redirects the user to their final destination
 
+
+## Install
+
+See directions here: https://github.com/OSC/Open-OnDemand#authentication-deploy-the-registration-page
+
+## Configuration and Branding
+
+Edit the config.php file to change the branding of the registration and success pages. A global
+instance of Config is used in the php that renders these pages.
+
+## Code overview
+
 pages:
 
 * index.php - shows the webform and handles form submission
@@ -20,14 +32,3 @@ resources:
 * success.php - success and redirect page template
 * ldap.php - contains function to validate user credentials by binding to ldap
 * config.php - branding
-
-
-
-## Install
-
-See directions here: https://github.com/OSC/Open-OnDemand#authentication-deploy-the-registration-page
-
-## Configuration and Branding
-
-Edit the config.php file to change the branding of the registration and success pages. A global
-instance of Config is used in the php that renders these pages.
