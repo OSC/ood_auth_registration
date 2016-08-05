@@ -1,10 +1,12 @@
 # ood_auth_registration
 
-summary:
+OSC OnDemand Open ID Connect CI Logon Registration page
+
+Summary:
 
 1. display a webform to the user, showing their DN and asking for their OSC credentials
-2. upon form submission, bind ldap to confirm they are who they say they are
-3. if successful binding, map the OSC username to the DN using add-user-dn script that apache is given privilege to run on behalf of the user
+2. upon form submission, bind to ldap to confirm they are who they say they are
+3. if successful binding, map the HPC username to the DN using add-user-dn script that apache is given privilege to run on behalf of the user
 4. show them success.php, which then redirects the user to their final destination
 
 pages:
@@ -17,16 +19,15 @@ resources:
 * form.php - web form page template
 * success.php - success and redirect page template
 * ldap.php - contains function to validate user credentials by binding to ldap
+* config.php - branding
 
 
 
 ## Install
 
-Currently deployed as symlink:
+See directions here: https://github.com/OSC/Open-OnDemand#authentication-deploy-the-registration-page
 
-```
-efranz@websvcs08:~/dev/ood_auth_map (master)$ ls
-/opt/rh/httpd24/root/var/www/html/register -dl
-lrwxrwxrwx 1 root root 31 Apr 29 12:21
-/opt/rh/httpd24/root/var/www/html/register -> /nfs/17/efranz/dev/ood_auth_map
-```
+## Configuration and Branding
+
+Edit the config.php file to change the branding of the registration and success pages. A global
+instance of Config is used in the php that renders these pages.
