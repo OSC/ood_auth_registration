@@ -8,6 +8,18 @@
 require_once('ldap.php');
 
 /**
+ * Fetch a variable from an object without php warnings
+ *
+ * @param $source The array containing data
+ * @param $key The key that will be inspected
+ * @param null $default An optional return value if location is empty
+ * @return null Return the value of $source[$key] or null if empty
+ */
+function fetch($source, $key, $default = NULL) {
+    return isset($source[$key]) ? $source[$key] : $default;
+}
+
+/**
  * Ensures provided username is valid
  *
  * @param string $username  the provided username
@@ -83,10 +95,10 @@ function display_login_form($error = null){
   // only display claims that the user would understand
   // default array_filter removes pairs with empty values
   $provider_claims = array_filter(array(
-    "Name" => $_SERVER["OIDC_CLAIM_idp_name"],
-    "Login ID" => $_SERVER["OIDC_CLAIM_eppn"],
-    "Login User" => $_SERVER["OIDC_CLAIM_name"],
-    "Login Email" => $_SERVER["OIDC_CLAIM_email"]
+    "Name" => fetch($_SERVER, "OIDC_CLAIM_idp_name"),
+    "Login ID" => fetch($_SERVER, "OIDC_CLAIM_eppn"),
+    "Login User" => fetch($_SERVER, "OIDC_CLAIM_name"),
+    "Login Email" => fetch($_SERVER, "OIDC_CLAIM_email")
   ));
 
   include "form.php";
