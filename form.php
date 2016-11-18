@@ -38,7 +38,7 @@ body {
       <a class="navbar-brand" href="#"><?= $config->title ?></a>
     </div>
     <div class="navbar-header pull-right">
-      <a class="navbar-brand" href="/oidc?logout=https%3A%2F%2F<?= $_SERVER['HTTP_HOST'] ?>">Logout</a>
+      <a class="navbar-brand" href="/oidc?logout=https%3A%2F%2F<?= htmlentities(urlencode($_SERVER['HTTP_HOST'])) ?>">Logout</a>
     </div>
   </div><!-- /.navbar-collapse -->
 </nav>
@@ -96,7 +96,7 @@ body {
         <legend>Open ID Connect Provider</legend>
           <dl class="dl-horizontal">
             <?php foreach($provider_claims as $key => $value){ ?>
-              <dt><?= $key ?></dt><dd><?= $value ?></dd>
+              <dt><?= $key ?></dt><dd><?= htmlentities($value)?></dd>
             <?php } ?>
           </dl>
       </fieldset>
