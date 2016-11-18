@@ -95,10 +95,10 @@ function display_login_form($error = null){
   // only display claims that the user would understand
   // default array_filter removes pairs with empty values
   $provider_claims = array_filter(array(
-    "Name" => $_SERVER["OIDC_CLAIM_idp_name"],
-    "Login ID" => $_SERVER["OIDC_CLAIM_eppn"],
-    "Login User" => $_SERVER["OIDC_CLAIM_name"],
-    "Login Email" => $_SERVER["OIDC_CLAIM_email"]
+    "Name" => fetch($_SERVER, "OIDC_CLAIM_idp_name"),
+    "Login ID" => fetch($_SERVER, "OIDC_CLAIM_eppn"),
+    "Login User" => fetch($_SERVER, "OIDC_CLAIM_name"),
+    "Login Email" => fetch($_SERVER, "OIDC_CLAIM_email")
   ));
 
   include "form.php";
