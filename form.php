@@ -5,7 +5,7 @@
 <?php include('config.php'); ?>
 
 <head>
-  <title><?= $config->title ?> | Register OpenID Provider</title>
+  <title><?= $config->title ?> | Register OpenID Connect Provider</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -52,7 +52,7 @@ body {
   <div class="alert alert-danger" role="alert"><strong>Registration failed:</strong> <?= $error ?></div>
   <?php endif; ?>
 
-  <h3>Login to register this Open Connect Id Provider with your HPC account</h3>
+  <h3>Login to register this OpenID Connect Provider with your HPC account</h3>
   <p>This is the first time you have tried logging into OnDemand with this external
   identity provider. By providing your HPC account credentials we will associate
   the two accounts so that in the future you may login just with this identity provider.</p>
@@ -93,7 +93,7 @@ body {
     <div class="col-md-6">
       <!-- FIXME: address Firefox fieldets issue -->
       <fieldset>
-        <legend>Open ID Connect Provider</legend>
+        <legend>OpenID Connect Provider</legend>
           <dl class="dl-horizontal">
             <?php foreach($provider_claims as $key => $value){ ?>
               <dt><?= $key ?></dt><dd><?= htmlentities($value)?></dd>
