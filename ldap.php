@@ -69,7 +69,7 @@ $GLOBALS['id'] = array (
  * string $username
  */
 function find_ldap ($username) {
-	global $sreg, $ldap, $profile;
+    global $sreg, $ldap, $profile;
 
         $no = "no";
         $profile['user_found'] = false;
@@ -77,37 +77,37 @@ function find_ldap ($username) {
         if ($username != "") {
                 $ds = ldap_connect($ldap['primary']) or $ds = ldap_connect($ldap['fallback']);
                 if ($ds) {
-			ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,$ldap['protocol']);
-			if ($ldap['isad'] == true) ldap_set_option($ds,LDAP_OPT_REFERRALS,0);
+            ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,$ldap['protocol']);
+            if ($ldap['isad'] == true) ldap_set_option($ds,LDAP_OPT_REFERRALS,0);
 
                         $r = ldap_bind($ds,$ldap['binddn'],$ldap['password']);
-            		$sr = ldap_search($ds,$ldap['searchdn'],sprintf($ldap['filter'],$username));
-			$info = ldap_get_entries($ds, $sr);
+                    $sr = ldap_search($ds,$ldap['searchdn'],sprintf($ldap['filter'],$username));
+            $info = ldap_get_entries($ds, $sr);
 
                         if ($info["count"] == 1) {
                                 $no = "ok";
                                 $profile['user_found'] = true;
-				if ($ldap['lookupcn'] == true) $profile['auth_cn'] = $info[0]['cn'][0];
-				if ($ldap['autodn'] == true) $ldap['testdn'] = $info['0']['dn'];
+                if ($ldap['lookupcn'] == true) $profile['auth_cn'] = $info[0]['cn'][0];
+                if ($ldap['autodn'] == true) $ldap['testdn'] = $info['0']['dn'];
 
-				# Populate user information from LDAP - if (array_key_exists('keyname', $ldap))...
-				$sreg['nickname'] = $info[0][$ldap['nickname']][0];
-				$sreg['email']    = $info[0][$ldap['email']][0];
+                # Populate user information from LDAP - if (array_key_exists('keyname', $ldap))...
+                $sreg['nickname'] = $info[0][$ldap['nickname']][0];
+                $sreg['email']    = $info[0][$ldap['email']][0];
 
                                 $values = is_array($ldap['fullname']) ? $ldap['fullname'] : array($ldap['fullname']);
                                 $fullname = '';
-	                        foreach ($values as $vname) {
-				        $aname = $info[0][$vname][0];
-				        if ($aname != '') $fullname = ($fullname == '' ? $aname : $fullname . ' ' . $aname);
+                            foreach ($values as $vname) {
+                        $aname = $info[0][$vname][0];
+                        if ($aname != '') $fullname = ($fullname == '' ? $aname : $fullname . ' ' . $aname);
                                 }
                                 $sreg['fullname'] = $fullname;
 
-				$sreg['country']  = $info[0][$ldap['country']][0];
+                $sreg['country']  = $info[0][$ldap['country']][0];
 
-				# Values not obtained from LDAP
-				$sreg['language'] = $ldap['def_language'];
-				$sreg['postcode'] = $ldap['def_postcode'];
-				$sreg['timezone'] = $ldap['def_timezone'];
+                # Values not obtained from LDAP
+                $sreg['language'] = $ldap['def_language'];
+                $sreg['postcode'] = $ldap['def_postcode'];
+                $sreg['timezone'] = $ldap['def_timezone'];
                         }
                         ldap_close($ds);
                 }
@@ -122,14 +122,14 @@ function find_ldap ($username) {
  * Perform LDAP bind test with provided username and password
  * Reject user if LDAP attribute that indicates disabled account
  * Reject user if account has expired password
- * Return "ok" if successful auth or an error explanation if not 
+ * Return "ok" if successful auth or an error explanation if not
  *
  * @param string $username  the provided username
  * @param string $password  the provided password
  *
  * @return string  "ok" if user is allowed to log in, or a reason for failure if
  *                 the user is denied
- * 
+ *
  * @access public
  * @static
  */
