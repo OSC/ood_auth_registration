@@ -49,7 +49,7 @@ body {
 <div class="container">
 
   <?php if ($error != null): ?>
-  <div class="alert alert-danger" role="alert"><strong>Registration failed:</strong> <?= $error ?></div>
+  <div class="alert alert-danger" role="alert"><strong>Login failed:</strong> <?= $error ?></div>
   <?php endif; ?>
 
   <h3>Login to register this OpenID Connect Provider with your HPC account</h3>
@@ -83,7 +83,8 @@ body {
 
        <div class="form-group">
          <div class="col-sm-offset-2 col-sm-6">
-           <button type="submit" class="btn btn-default">Log in</button>
+           <button type="submit" formaction="?register" class="btn btn-primary">Log in</button>
+           <button type="submit" formaction="?manage" class="btn btn-info">Manage</button>
          </div>
        </div>
      <!--[if lt IE 9]></fieldset><![endif]-->

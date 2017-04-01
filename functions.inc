@@ -149,8 +149,25 @@ function list_my_dns($user)
 
     $cmd = "/usr/local/bin/list-user-dns --user {$user} 2>&1";
     exec($cmd, $output, $return_var);
-    debug($output);
-    debug($return_var);
+    
+    return $output;
+}
+
+function get_existing_dns($user) {
+    $existing_dns = list_my_dns($user);
+    $dns_to_user = array();
+    if (isset($existing_dns[0]) && is_string($existing_dns[0])) {
+        //  User has one or more existing mappings        
+        foreach ($existing_dns as $rawdn) {
+            $dn_parts = explode(' ', $rawdn);
+            //  Strip off quotes from beginning and end of dn part
+            $endpos = strlen($dn_parts[0]) - 2;
+            $dn = substr($dn_parts[0], 1,$endpos);
+            $username = $dn_parts[1];
+            $dns_to_user[$dn] = $username;
+        }        
+    }
+    return $dns_to_user;
 }
 
 function debug($var)
@@ -171,4 +188,58 @@ function dump_OIDC()
             debug("$key: $value");
         }
     }
+}
+
+function print_existing_mappings_form(array $existing_dns = array(), $current_dn = '', $username = '', $password = '')
+{
+    ?>
+    <form action="?manage=1" method="post">
+        <legend>Existing Mappings</legend>
+    <?php
+    foreach ($existing_dns as $dn => $dn_username) {
+        $helptext = '';
+        $divclass = '';
+        if ($dn === $current_dn) {
+            $helptext = '<span class="help-block">You are currently logged-in via this mapping (below)</span>';
+            $divclass = ' has-warning';
+        }
+        ?>
+        <div class="form-group<?php echo $divclass; ?>">
+            <label>
+                <?=$helptext?>
+                <input type="radio" name="dn" value="<?php echo htmlentities($dn); ?>" />
+                <?php echo htmlentities($dn) . ' (' . htmlentities($dn_username) . ')'; ?>
+            </label>
+        </div>
+        <?php
+    }
+    ?>
+    <input type="hidden" name="username" value="<?php echo htmlentities($username); ?>" />
+    <input type="hidden" name="password" value="<?php echo htmlentities($password); ?>" />
+    <input type="hidden" name="delete" value="1" />                    
+    <button type="submit" class="btn btn-danger">Remove</button>
+    <a href="/register/" class="btn btn-link">Go back</a>
+    </form>
+    <?php
+}
+
+function print_delete_confirmation_form($dn = '', $username = '', $password = '')
+{
+    ?>
+    <form action="?manage=1" method="post">
+        <input type="hidden" name="delete" value="1" />
+        <input type="hidden" name="dn" value="<?=htmlentities($dn)?>" />
+        <input type="hidden" name="username" value="<?=htmlentities($username)?>" />
+        <input type="hidden" name="password" value="<?=htmlentities($password)?>" />
+        <button class="btn btn-danger" type="submit" name="confirm" value="1">Confirm</button>
+        <a href="/register/" class="btn btn-link">Go Back</a>
+    </form>
+    <?php
+}
+
+function is_valid_dn_mapping($dn, $username)
+{
+    $existing_user_dns = get_existing_dns($username);
+    //  If the key exists, the user has the dn
+    return isset($existing_user_dns[$dn]);
 }
