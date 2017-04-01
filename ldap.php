@@ -197,5 +197,3 @@ function test_ldap ($username, $password) {
     }
     return $no; // Return "ok" if allowed access, an error message otherwise
 }
-
-?>
