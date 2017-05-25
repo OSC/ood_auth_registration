@@ -24,8 +24,8 @@
  */
 $GLOBALS['ldap'] = array (
     # Connection settings
-    'primary'         => 'ldaps://cts06.osc.edu:636',
-    'fallback'        => 'ldaps://cts08.osc.edu:636',
+    'primary'         => 'ldaps://openldap2.infra.osc.edu:636',
+    'fallback'        => 'ldaps://openldap3.infra.osc.edu:636',
     'protocol'        => 3,
     # AD specific
     'isad'            => false, // are we connecting to Active Directory?
