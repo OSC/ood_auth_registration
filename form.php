@@ -38,7 +38,7 @@ body {
       <a class="navbar-brand" href="#"><?= $config->title ?></a>
     </div>
     <div class="navbar-header pull-right">
-      <a class="navbar-brand" href="/oidc?logout=https%3A%2F%2F<?= htmlentities(urlencode($_SERVER['HTTP_HOST'])) ?>">Logout</a>
+      <a class="navbar-brand" href="/logout">Log Out</a>
     </div>
   </div><!-- /.navbar-collapse -->
 </nav>
