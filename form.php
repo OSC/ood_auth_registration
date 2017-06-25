@@ -36,8 +36,9 @@ body {
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a class="navbar-brand" href="#"><?= $config->title ?></a>
+      <a class="navbar-brand pull-right visible-xs-block" href="/logout">Log Out</a>
     </div>
-    <div class="navbar-header pull-right">
+    <div class="navbar-header pull-right hidden-xs">
       <a class="navbar-brand" href="/logout">Log Out</a>
     </div>
   </div><!-- /.navbar-collapse -->
