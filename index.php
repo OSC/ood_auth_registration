@@ -97,7 +97,6 @@ function display_login_form($error = null){
   $provider_claims = array_filter(array(
     "Name" => fetch($_SERVER, "OIDC_CLAIM_idp_name"),
     "Issuer" => fetch($_SERVER, "OIDC_CLAIM_iss"),
-    "Subject" => fetch($_SERVER, "OIDC_CLAIM_sub"),
     "Login ID" => fetch($_SERVER, "OIDC_CLAIM_eppn"),
     "Login User" => fetch($_SERVER, "OIDC_CLAIM_name"),
     "Preferred Username" => fetch($_SERVER, "OIDC_CLAIM_preferred_username"),
