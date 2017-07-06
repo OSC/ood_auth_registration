@@ -88,17 +88,33 @@ function get_redir(){
   return $redir;
 }
 
+// return preferred username if issuer is in whitelist of issuers that we want
+// to use the preferred username for mapping. otherwise return null.
+function default_user(){
+  $default_user = null;
+
+  $issuer = fetch($_SERVER, "OIDC_CLAIM_iss");
+  $issuers_with_default_user = array(
+    "https://idp-dev.osc.edu/auth/realms/osc",
+    "https://idp-dev.osc.edu/auth/realms/awesim",
+    "https://idp-test.osc.edu/auth/realms/osc",
+    "https://idp-test.osc.edu/auth/realms/awesim",
+    "https://idp.osc.edu/auth/realms/osc",
+    "https://idp.osc.edu/auth/realms/awesim",
+  );
+
+  if(in_array($issuer, $issuers_with_default_user)){
+    $default_user = fetch($_SERVER, "OIDC_CLAIM_preferred_username");
+  }
+
+  return $default_user;
+}
+
+
 function display_login_form($error = null){
   $form_action = $_SERVER['REQUEST_URI'];
   $redir = get_redir();
-
-  # HACK:
-  # use preferred username as fixed username for mapping
-  # unless issuer is CILogon
-  $issuer = fetch($_SERVER, "OIDC_CLAIM_iss");
-  $default_user = fetch($_SERVER, "OIDC_CLAIM_preferred_username");
-  if($issuer && strpos($issuer, "cilogon") !== false)
-    $default_user = null;
+  $default_user = default_user();
 
   // only display claims that the user would understand
   // default array_filter removes pairs with empty values
