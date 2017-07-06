@@ -92,6 +92,14 @@ function display_login_form($error = null){
   $form_action = $_SERVER['REQUEST_URI'];
   $redir = get_redir();
 
+  # HACK:
+  # use preferred username as fixed username for mapping
+  # unless issuer is CILogon
+  $issuer = fetch($_SERVER, "OIDC_CLAIM_iss");
+  $default_user = fetch($_SERVER, "OIDC_CLAIM_preferred_username");
+  if($issuer && strpos($issuer, "cilogon") !== false)
+    $default_user = null;
+
   // only display claims that the user would understand
   // default array_filter removes pairs with empty values
   $provider_claims = array_filter(array(

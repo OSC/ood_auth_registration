@@ -71,7 +71,9 @@ body {
        <div class="form-group">
          <label class="col-sm-2 control-label" for="username">Username:</label>
          <div class="col-sm-7">
-           <input class="form-control" type="text" id="username" name="username" placeholder="Username">
+           <input class="form-control" type="text" id="username" name="username"
+             <?= $default_user ? 'value="' . $default_user . '" readonly' : 'placeholder="Username"' ?>
+           >
          </div>
        </div>
 
