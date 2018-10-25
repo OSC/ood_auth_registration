@@ -24,8 +24,8 @@
  */
 $GLOBALS['ldap'] = array (
     # Connection settings
-    'primary'         => 'ldaps://openldap2.infra.osc.edu:636',
-    'fallback'        => 'ldaps://openldap3.infra.osc.edu:636',
+    'primary'         => 'ldaps://ldap1.infra.osc.edu:636',
+    'fallback'        => 'ldaps://ldap2.infra.osc.edu:636',
     'protocol'        => 3,
     # AD specific
     'isad'            => false, // are we connecting to Active Directory?
@@ -35,9 +35,9 @@ $GLOBALS['ldap'] = array (
     'password'        => '',
     # User account
     'autodn'          => false, // extract DN from search result, ignore 'testdn'
-    'testdn'          => 'uid=%s,ou=People,ou=hpc,o=osc',
+    'testdn'          => 'cn=%s,ou=People,dc=osc,dc=edu',
     # Searching data
-    'searchdn'        => 'ou=People,ou=hpc,o=osc',
+    'searchdn'        => 'ou=People,dc=osc,dc=edu',
     'filter'          => 'uid=%s',
 
     # Friendly names matching to LDAP attribute names
@@ -71,22 +71,22 @@ $GLOBALS['id'] = array (
 function find_ldap ($username) {
     global $sreg, $ldap, $profile;
 
-        $no = "no";
-        $profile['user_found'] = false;
+    $no = "no";
+    $profile['user_found'] = false;
 
-        if ($username != "") {
-                $ds = ldap_connect($ldap['primary']) or $ds = ldap_connect($ldap['fallback']);
-                if ($ds) {
+    if ($username != "") {
+        $ds = ldap_connect($ldap['primary']) or $ds = ldap_connect($ldap['fallback']);
+        if ($ds) {
             ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,$ldap['protocol']);
             if ($ldap['isad'] == true) ldap_set_option($ds,LDAP_OPT_REFERRALS,0);
 
-                        $r = ldap_bind($ds,$ldap['binddn'],$ldap['password']);
-                    $sr = ldap_search($ds,$ldap['searchdn'],sprintf($ldap['filter'],$username));
+            $r = ldap_bind($ds,$ldap['binddn'],$ldap['password']);
+            $sr = ldap_search($ds,$ldap['searchdn'],sprintf($ldap['filter'],$username));
             $info = ldap_get_entries($ds, $sr);
 
-                        if ($info["count"] == 1) {
-                                $no = "ok";
-                                $profile['user_found'] = true;
+            if ($info["count"] == 1) {
+                $no = "ok";
+                $profile['user_found'] = true;
                 if ($ldap['lookupcn'] == true) $profile['auth_cn'] = $info[0]['cn'][0];
                 if ($ldap['autodn'] == true) $ldap['testdn'] = $info['0']['dn'];
 
@@ -94,13 +94,13 @@ function find_ldap ($username) {
                 $sreg['nickname'] = $info[0][$ldap['nickname']][0];
                 $sreg['email']    = $info[0][$ldap['email']][0];
 
-                                $values = is_array($ldap['fullname']) ? $ldap['fullname'] : array($ldap['fullname']);
-                                $fullname = '';
-                            foreach ($values as $vname) {
-                        $aname = $info[0][$vname][0];
-                        if ($aname != '') $fullname = ($fullname == '' ? $aname : $fullname . ' ' . $aname);
-                                }
-                                $sreg['fullname'] = $fullname;
+                $values = is_array($ldap['fullname']) ? $ldap['fullname'] : array($ldap['fullname']);
+                $fullname = '';
+                foreach ($values as $vname) {
+                    $aname = $info[0][$vname][0];
+                    if ($aname != '') $fullname = ($fullname == '' ? $aname : $fullname . ' ' . $aname);
+                }
+                $sreg['fullname'] = $fullname;
 
                 $sreg['country']  = $info[0][$ldap['country']][0];
 
@@ -108,11 +108,11 @@ function find_ldap ($username) {
                 $sreg['language'] = $ldap['def_language'];
                 $sreg['postcode'] = $ldap['def_postcode'];
                 $sreg['timezone'] = $ldap['def_timezone'];
-                        }
-                        ldap_close($ds);
-                }
+            }
+            ldap_close($ds);
         }
-        return $no;
+    }
+    return $no;
 }
 
 /**
@@ -140,14 +140,14 @@ function test_ldap ($username, $password) {
     // Disallow empty usernames or passwords
     if (($username != "") && ($password != "")) {
         /* Connect to LDAP servers - this failover probably does NOT work based
-           on comments at http://php.net/manual/en/function.ldap-connect.php */
+        on comments at http://php.net/manual/en/function.ldap-connect.php */
         $ds = ldap_connect($ldap['primary']) or $ds = ldap_connect($ldap['fallback']);
         // If there was a successful connection
         if ($ds) {
             // Set the protocol version
             ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,$ldap['protocol']);
             /* Unused, but good practice to implement. If talking to AD server,
-               set necessary options */
+            set necessary options */
             if ($ldap['isad'] == true) ldap_set_option($ds,LDAP_OPT_REFERRALS,0);
             // Attempt to bind by automatically finding DN and using the password
             if ($ldap['autodn'] == true) {
@@ -161,6 +161,7 @@ function test_ldap ($username, $password) {
                 $sr = ldap_search($ds,$ldap['searchdn'],sprintf($ldap['filter'],$username));
                 // Parse the returned search results
                 $info = ldap_get_entries($ds, $sr);
+
                 // If there is exactly one username match
                 if ($info["count"] == 1) {
                     // If automatically finding DN, then set the test DN based on search DN
@@ -168,12 +169,12 @@ function test_ldap ($username, $password) {
                     /* Populate user information from LDAP - if (array_key_exists('keyname', $ldap))...
                        Only some of this information is necessary, but thought
                        it would be nice to have if needed in the future */
-                    $id['username'] = $info[0][$ldap['username']][0];
-                    $id['email']    = $info[0][$ldap['email']][0];
-                    $id['name']     = $info[0][$ldap['name']][0];
-                    $id['shell']    = $info[0][$ldap['shell']][0];
+                       $id['username'] = $info[0][$ldap['username']][0];
+                       $id['email']    = $info[0][$ldap['email']][0];
+                       $id['name']     = $info[0][$ldap['name']][0];
+                       $id['shell']    = $info[0][$ldap['shell']][0];
                     /* Get the LDAP attribute that determines if an account is
-                       disabled */
+                    disabled */
                     $id['disabled'] = $info[0][$ldap['disabled']][0];
                     // If the account is disabled via LDAP attribute or shell, deny access
                     if (strtoupper($id['disabled']) == "TRUE" || $id['shell'] == "/access/denied") {
@@ -185,6 +186,14 @@ function test_ldap ($username, $password) {
                     elseif ($id['shell'] == "/bin/password_expired") {
                         $no = $id['name'] . ", your password has expired. Please contact OSC Help";
                     }
+                    /*
+                     * Account locked
+                     * 
+                     * nsAccountLock is not guaranteed to be present
+                     */
+                    elseif (array_key_exists('nsaccountlock', $info[0]) && strtoupper($info[0]['nsaccountlock'][0]) == 'TRUE') {
+                        $no = $id['name'] . ", your account has been locked. Please contact OSC Help";
+                    }
                     // If the user has passed all of these tests, they must be a
                     // valid user that should be allowed access
                     else {
@@ -192,7 +201,7 @@ function test_ldap ($username, $password) {
                     }
                 }
             }
-        ldap_close($ds); // Close the open LDAP connection
+            ldap_close($ds); // Close the open LDAP connection
         }
     }
     return $no; // Return "ok" if allowed access, an error message otherwise
