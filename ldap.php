@@ -24,8 +24,8 @@
  */
 $GLOBALS['ldap'] = array (
     # Connection settings
-    'primary'         => 'ldaps://openldap2.infra.osc.edu:636',
-    'fallback'        => 'ldaps://openldap3.infra.osc.edu:636',
+    'primary'         => 'ldaps://ldap1.infra.osc.edu:636',
+    'fallback'        => 'ldaps://ldap2.infra.osc.edu:636',
     'protocol'        => 3,
     # AD specific
     'isad'            => false, // are we connecting to Active Directory?
@@ -35,9 +35,9 @@ $GLOBALS['ldap'] = array (
     'password'        => '',
     # User account
     'autodn'          => false, // extract DN from search result, ignore 'testdn'
-    'testdn'          => 'uid=%s,ou=People,ou=hpc,o=osc',
+    'testdn'          => 'cn=%s,ou=People,dc=osc,dc=edu',
     # Searching data
-    'searchdn'        => 'ou=People,ou=hpc,o=osc',
+    'searchdn'        => 'ou=People,dc=osc,dc=edu',
     'filter'          => 'uid=%s',
 
     # Friendly names matching to LDAP attribute names
