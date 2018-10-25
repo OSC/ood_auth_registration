@@ -161,6 +161,7 @@ function test_ldap ($username, $password) {
                 $sr = ldap_search($ds,$ldap['searchdn'],sprintf($ldap['filter'],$username));
                 // Parse the returned search results
                 $info = ldap_get_entries($ds, $sr);
+
                 // If there is exactly one username match
                 if ($info["count"] == 1) {
                     // If automatically finding DN, then set the test DN based on search DN
@@ -182,8 +183,16 @@ function test_ldap ($username, $password) {
                     /* If the account has an expired password, suggest to the
                        user that they change their password at the appropriate
                        location on the web */
-                       elseif ($id['shell'] == "/bin/password_expired") {
+                    elseif ($id['shell'] == "/bin/password_expired") {
                         $no = $id['name'] . ", your password has expired. Please contact OSC Help";
+                    }
+                    /*
+                     * Account locked
+                     * 
+                     * nsAccountLock is not guaranteed to be present
+                     */
+                    elseif (array_key_exists('nsaccountlock', $info[0]) && strtoupper($info[0]['nsaccountlock'][0]) == 'TRUE') {
+                        $no = $id['name'] . ", your account has been locked. Please contact OSC Help";
                     }
                     // If the user has passed all of these tests, they must be a
                     // valid user that should be allowed access
@@ -192,9 +201,9 @@ function test_ldap ($username, $password) {
                     }
                 }
             }
-        ldap_close($ds); // Close the open LDAP connection
+            ldap_close($ds); // Close the open LDAP connection
+        }
     }
-}
     return $no; // Return "ok" if allowed access, an error message otherwise
 }
 
