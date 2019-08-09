@@ -1,5 +1,12 @@
 ## Unreleased
 
+## 0.4.0 (2019-08-09)
+
+### Changed
+
+- Updated colors to match new OSC branding
+
+
 ## 0.3.0 (2018-10-25)
 
 ### Changed

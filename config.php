@@ -13,8 +13,8 @@ $config = new Config;
 
 /* OSC Example */
 $config->title = 'OSC OnDemand';
-$config->nav_background_color = '#cf102d';
-$config->nav_border_color = '#a00c23';
+$config->nav_background_color = '#6CACE4';
+$config->nav_border_color = '#375C84';
 $config->change_password_url = 'https://my.osc.edu';
 
 
